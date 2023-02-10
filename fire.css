@@ -1,0 +1,60 @@
+*, *::after, *::before  {
+    box-sizing: border-box;
+}
+
+:root {
+}
+
+body {
+    height:100vh;
+  }
+  
+  body > div {
+    width:60vmin;
+    height:10vmin;
+    display:flex;
+    align-items: center;
+  /*   flex-direction:row; - default */
+    animation-name: stokje;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes stokje{
+    0% {
+      transform: rotate(0);
+    }
+    100%{
+      transform: rotate(1turn);
+    }
+  }
+  @keyframes vlammetje{
+    0% {
+      transform: rotate(0);
+    }
+    100%{
+      transform: rotate(-1turn);
+    }
+  }
+  
+  body > div div:nth-of-type(1),
+  body > div div:nth-of-type(3){
+    height:100%;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background-image:linear-gradient(orange, gold 50%, blue 50%);
+    
+    z-index:100;
+    animation-name: vlammetje;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  
+  }
+  
+  body > div div:nth-of-type(2) {
+    height:20%;
+    background-color:pink;
+    flex-grow:1;
+    
+    transform:scaleX(1.1);
+  }
