@@ -1,13 +1,17 @@
 *, *::after, *::before  {
     box-sizing: border-box;
 }
-
+/* styling van mijn body */
 body {
     height:100vh;
     background: linear-gradient(to bottom, #201c2f 0%, #100751 100%);
     overflow: hidden;
   }
-  
+
+body:has(#bg-animatie:checked ){
+  background: linear-gradient(to bottom,#fc4a1a, #f7b733);
+} 
+
 h1{
   color: white;
   text-align: center;
@@ -16,27 +20,20 @@ h1{
   font-weight: bold;
   text-shadow: #FC0 1px 0 10px;
   animation-play-state: paused;
+  
 }
-
+/* Spannend eerste checkbox! 
+Hier laat ik mijn h1 langzaam verdwijnen om ruimte te maken voor mijn animatie */
 body:has(#play-animatie:checked ) > h1{
   animation-name: h1Weg;
-  animation-duration: 4s;
-  animation-delay: 2s;
+  animation-duration: 1s;
+  animation-delay: 1s;
   transition-timing-function: ease-out;
   animation-play-state: running;
+  animation-fill-mode: forwards, forwards;
 }
-form{
-  position: absolute;
-  bottom:0;
-  padding: 2em;
-}
-form label{
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 2em;
-  color: white;
-  font-weight: bold;
-  text-shadow: #FC0 1px 0 10px;
-}
+
+/* Styling van mijn vuurdanser */
 img {
   width: 50vmin;
   position: absolute;
@@ -49,85 +46,167 @@ body:has(#play-animatie:checked ) > img{
   animation-name: poppetje;
   animation-duration: 2s;
   animation-delay: 1s;
-  transition-timing-function: ease-out;
   animation-play-state: running;
 }
+
+/* styling van mijn formulier/ checkbox */
+form:first-of-type{
+  position: absolute;
+  bottom:0;
+  padding: 2em;
+}
+form:nth-of-type(2){
+  position: absolute;
+  bottom:0;
+  padding: 2em;
+  left: 8em;
+}
+form label{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+  text-shadow: #FC0 1px 0 10px;
+}
+
+/* hier begint de echte werk, vanaf hier style ik mijn vuurstokjes */
 body > div{
     width:50vmin;
     height:10vmin;
     display:flex;
     align-items: center;
     animation-play-state: paused;
+    position: absolute;
+    top: 40%;
   }
 
+  body > div:first-of-type{
+    left: 21%;
+    transform: translate(30px, 20px) rotate(-50deg);
+    animation-name: naarBovenLinks, draaiLinks;
+  }
+  
+  body > div:nth-of-type(2){
+    left: 50%;
+    transform: translate(-30px, 20px) rotate(50deg);
+    animation-name: naarBovenRechts, draaiRechts;
+  }
+ 
   body:has(#play-animatie:checked) > div:nth-of-type(1),
-  body:has(#play-animatie:checked) > div:nth-of-type(2){
-    animation-name: naarBoven;
+  body:has(#play-animatie:checked) > div:nth-of-type(2) {
     animation-duration: 3s;
-    animation-delay: 2s;
-  }
-
-body > div:first-of-type{
-  position: absolute;
-  top: 40%;
-  left: 21%;
-  transform: translate(30px, 20px) rotate(-50deg);
-  animation-play-state: paused;
-}
-
-body > div:nth-of-type(2){
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(30px, 40px) rotate(50deg);
-
-}
-  body:has(#play-animatie:checked) > div {
-    animation-name: stokje;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
+    animation-delay: 1.1s;
     animation-play-state: running;
+    animation-timing-function: linear;
   }
 
+/* De keyframes voor mijn animatie van de vuurstokjes */
+  @keyframes naarBovenLinks {
+    0%{
+      top: 40%;
+      animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    50% {
+      top: 0%;
+      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+    100%{
+      top: 40%;
+    }
+  } 
+
+  @keyframes draaiLinks {
+    0% {
+      transform: translate(30px, 20px) rotate(-50deg);
+    }
+    100% {
+      transform: translate(30px, 20px) rotate(1390deg);
+    }
+  }
+
+  @keyframes naarBovenRechts {
+    0%{
+      top: 40%;
+      animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    50% {
+      top: 0%;
+      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+    100%{
+      top: 40%;
+    }
+  } 
+
+  @keyframes draaiRechts {
+    0% {
+      transform: translate(-30px, 20px) rotate(50deg);
+    }
+    100% {
+      transform: translate(-30px, 20px) rotate(-1390deg);
+    }
+  }
+
+  /* styling van de vuurballen */
   body > div div:nth-of-type(1), 
   body > div div:nth-of-type(3){
     height:100%;
     aspect-ratio:1/1;
     border-radius:50%;
     background-color: #3A3B3C;
-
+    transform: rotate(50deg);
     z-index:100;
     animation-play-state: paused;
   } 
+  
+  body > div:nth-of-type(2) div:nth-of-type(1), 
+  body > div:nth-of-type(2)  div:nth-of-type(3){
+    height:100%;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background-color: #3A3B3C;
+    transform: rotate(-50deg);
+    z-index:100;
+    animation-play-state: paused;
+  }
 
   body:has(#play-animatie:checked) > div div:nth-of-type(1),
   body:has(#play-animatie:checked) > div div:nth-of-type(3){
     animation-name: vlammetje, brandBlussen;
-    animation-duration: 2s, 2s;
+    animation-duration: 2s, 3s;
     animation-delay: 0s, 4s;
     animation-direction: alternate;
-    animation-iteration-count: infinite;
     animation-play-state: running;
+    animation-fill-mode: forwards, forwards;
   }
-  
+
+  body:has(#play-animatie:checked) > div:nth-of-type(2) div:nth-of-type(1),
+  body:has(#play-animatie:checked) > div:nth-of-type(2) div:nth-of-type(3){
+    animation-name: vlammetje, brandBlussenAndere;
+    animation-duration: 2s, 3s;
+    animation-delay: 0s, 4s;
+    animation-direction: alternate;
+    animation-play-state: running;
+    animation-fill-mode: forwards, forwards;
+  } 
+  /* staaf */
   body >  div div:nth-of-type(2) {
     height:20%;
     background-color: #696B6F;
     flex-grow:1;
     transform:scaleX(1.1);
-    animation-play-state: paused;
+   
   }
 
-  @keyframes stokje{
+  @keyframes balletjelinks {
     0% {
-      transform:rotate(0);
+      transform: rotate(50deg);
     }
-    100%{
-      transform: rotate(1turn);
+    100% {
+      transform: rotate(-1390deg);
     }
   }
 
-  /* kan vlammetje dan weg als ik gwn een gradient heb? is toch makkelijker?*/
   @keyframes vlammetje{
     0% {
       transform: rotate(0);
@@ -160,43 +239,14 @@ body > div:nth-of-type(2){
     0%{
       transform: translate( -50% ,-10% );
     }
-    100% {
-      transform: translate(-50% ,50%)
+  
+    50% {
+      transform: translate(-50% ,50%);
+    }
+    100%{
+      transform: translate( -50% ,-10% );
     }
   }
-
- @keyframes naarBoven {
-  0%{
-    top: 40%;
-    transform: rotate(0)
-  }
-  25%{
-    top: 20%;
-    transform: rotate(1turn)
-  }
-  50% {
-    top: 10%;
-    transform: rotate(1turn)
-  }
-  75%{
-    top: 20%;
-    transform: rotate(1turn)
-  }
-
-  100%{
-    top: 40%;
-    transform: rotate(1turn)
-  }
-} 
-
-@keyframes terugBeneden {
-  0%{
-
-  }
-  100%{
-
-  }
-}
 
 @keyframes brandBlussen {
   0%{
@@ -217,15 +267,49 @@ body > div:nth-of-type(2){
     background-image: linear-gradient(to right, #bababa, #8a1202 80%, #aa2600 100%);
     box-shadow: 
       0 0 30px 5px rgba(244,110,28,0.8),
-      0 0 30px 15px rgba(244,110,28,0.3)
+      0 0 30px 15px rgba(244,110,28,0.3);
   }
   75%{
     background-image: linear-gradient(to right, #bababa, #8a1202 98%, #aa2600 100%);
     box-shadow: 
       0 0 30px 5px rgba(244,110,28,0.8),
-      0 0 30px 15px rgba(244,110,28,0.3)
+      0 0 30px 15px rgba(244,110,28,0.3);
   }
   100%{
-    background-image: #bababa;
+    background: #bababa;
+    box-shadow: unset;
+  }
+}
+
+@keyframes brandBlussenAndere {
+  0%{
+    background-image: linear-gradient(to left, #600101, #8a1202 60%, #aa2600 100%);
+      box-shadow: 
+        0 0 30px 5px rgba(244,110,28,0.8),
+        0 0 20px 10px rgba(244,110,28,0.6),
+        0 0 30px 15px rgba(244,110,28,0.3);
+  }
+  25% {
+    background-image: linear-gradient(to left, #bababa, #8a1202 70%, #aa2600 100%);
+    box-shadow: 
+      0 0 30px 5px rgba(244,110,28,0.8),
+      0 0 20px 10px rgba(244,110,28,0.6),
+      0 0 30px 15px rgba(244,110,28,0.3);
+  }
+  50% {
+    background-image: linear-gradient(to left, #bababa, #8a1202 80%, #aa2600 100%);
+    box-shadow: 
+      0 0 30px 5px rgba(244,110,28,0.8),
+      0 0 30px 15px rgba(244,110,28,0.3);
+  }
+  75%{
+    background-image: linear-gradient(to left, #bababa, #8a1202 98%, #aa2600 100%);
+    box-shadow: 
+      0 0 30px 5px rgba(244,110,28,0.8),
+      0 0 30px 15px rgba(244,110,28,0.3);
+  }
+  100%{
+    background: #bababa;
+    box-shadow: unset;
   }
 }
