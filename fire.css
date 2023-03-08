@@ -8,7 +8,6 @@ body {
     overflow: hidden;
   }
   
-
 h1{
   color: white;
   text-align: center;
@@ -16,6 +15,7 @@ h1{
   font-size: 3em;
   font-weight: bold;
   text-shadow: #FC0 1px 0 10px;
+  animation-play-state: paused;
 }
 
 body:has(#play-animatie:checked ) > h1{
@@ -23,6 +23,7 @@ body:has(#play-animatie:checked ) > h1{
   animation-duration: 4s;
   animation-delay: 2s;
   transition-timing-function: ease-out;
+  animation-play-state: running;
 }
 form{
   position: absolute;
@@ -42,14 +43,16 @@ img {
   top: 50%;
   left: 50%;
   transform: translate( -50% ,-10% );
+  animation-play-state: paused;
 }
 body:has(#play-animatie:checked ) > img{
   animation-name: poppetje;
   animation-duration: 2s;
   animation-delay: 1s;
   transition-timing-function: ease-out;
+  animation-play-state: running;
 }
-  body > div{
+body > div{
     width:50vmin;
     height:10vmin;
     display:flex;
@@ -57,11 +60,19 @@ body:has(#play-animatie:checked ) > img{
     animation-play-state: paused;
   }
 
+  body:has(#play-animatie:checked) > div:nth-of-type(1),
+  body:has(#play-animatie:checked) > div:nth-of-type(2){
+    animation-name: naarBoven;
+    animation-duration: 3s;
+    animation-delay: 2s;
+  }
+
 body > div:first-of-type{
   position: absolute;
   top: 40%;
   left: 21%;
   transform: translate(30px, 20px) rotate(-50deg);
+  animation-play-state: paused;
 }
 
 body > div:nth-of-type(2){
@@ -69,20 +80,9 @@ body > div:nth-of-type(2){
   top: 40%;
   left: 50%;
   transform: translate(30px, 40px) rotate(50deg);
-}
-
-body:has(#play-animatie:checked ) > div:nth-of-type(2){
-  animation-name: naarBoven;
-  animation-duration: 2s;
-  animation-delay: 4s;
 
 }
-
-
-
-
   body:has(#play-animatie:checked) > div {
-  /*   flex-direction:row; - default */
     animation-name: stokje;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -100,14 +100,14 @@ body:has(#play-animatie:checked ) > div:nth-of-type(2){
     animation-play-state: paused;
   } 
 
-
   body:has(#play-animatie:checked) > div div:nth-of-type(1),
   body:has(#play-animatie:checked) > div div:nth-of-type(3){
-    animation-name: vlammetje;
-    animation-duration: 2s;
+    animation-name: vlammetje, brandBlussen;
+    animation-duration: 2s, 2s;
+    animation-delay: 0s, 4s;
+    animation-direction: alternate;
     animation-iteration-count: infinite;
     animation-play-state: running;
-  
   }
   
   body >  div div:nth-of-type(2) {
@@ -118,7 +118,6 @@ body:has(#play-animatie:checked ) > div:nth-of-type(2){
     animation-play-state: paused;
   }
 
-
   @keyframes stokje{
     0% {
       transform:rotate(0);
@@ -127,6 +126,8 @@ body:has(#play-animatie:checked ) > div:nth-of-type(2){
       transform: rotate(1turn);
     }
   }
+
+  /* kan vlammetje dan weg als ik gwn een gradient heb? is toch makkelijker?*/
   @keyframes vlammetje{
     0% {
       transform: rotate(0);
@@ -167,14 +168,23 @@ body:has(#play-animatie:checked ) > div:nth-of-type(2){
  @keyframes naarBoven {
   0%{
     top: 40%;
+    transform: rotate(0)
+  }
+  25%{
+    top: 20%;
     transform: rotate(1turn)
   }
   50% {
-    top: -20%;
+    top: 10%;
     transform: rotate(1turn)
   }
+  75%{
+    top: 20%;
+    transform: rotate(1turn)
+  }
+
   100%{
-    top: -20%;
+    top: 40%;
     transform: rotate(1turn)
   }
 } 
@@ -188,20 +198,34 @@ body:has(#play-animatie:checked ) > div:nth-of-type(2){
   }
 }
 
-
 @keyframes brandBlussen {
   0%{
-    background-image: linear-gradient(to right, #600101, #8a1202 61%, #aa2600 100%);
+    background-image: linear-gradient(to right, #600101, #8a1202 60%, #aa2600 100%);
       box-shadow: 
         0 0 30px 5px rgba(244,110,28,0.8),
         0 0 20px 10px rgba(244,110,28,0.6),
         0 0 30px 15px rgba(244,110,28,0.3);
   }
-  50% {
-    background-image: linear-gradient(to right, #bababa, #8a1202 61%, #aa2600 100%);
+  25% {
+    background-image: linear-gradient(to right, #bababa, #8a1202 70%, #aa2600 100%);
     box-shadow: 
       0 0 30px 5px rgba(244,110,28,0.8),
       0 0 20px 10px rgba(244,110,28,0.6),
       0 0 30px 15px rgba(244,110,28,0.3);
+  }
+  50% {
+    background-image: linear-gradient(to right, #bababa, #8a1202 80%, #aa2600 100%);
+    box-shadow: 
+      0 0 30px 5px rgba(244,110,28,0.8),
+      0 0 30px 15px rgba(244,110,28,0.3)
+  }
+  75%{
+    background-image: linear-gradient(to right, #bababa, #8a1202 98%, #aa2600 100%);
+    box-shadow: 
+      0 0 30px 5px rgba(244,110,28,0.8),
+      0 0 30px 15px rgba(244,110,28,0.3)
+  }
+  100%{
+    background-image: #bababa;
   }
 }
